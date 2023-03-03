@@ -7,7 +7,80 @@
                 xmlns:api="clr-namespace:Client.Api.Base.UI"
                 xmlns:viewModel="clr-namespace:Client.UI.ViewModel.Windows"
                 xmlns:local="clr-namespace:Client.UI.Windows"
+                xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
+                xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
                 mc:Ignorable="d"
-                Title="Vokabeltrainer">
-    <DockPanel />
+                Title="Vokabeltrainer"
+                FontSize="14"
+                DataContext="{Binding ViewModel, RelativeSource={RelativeSource Self}}">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <DockPanel DockPanel.Dock="Top">
+                <Button VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" Margin="5" BorderBrush="Black"
+                        Background="Transparent" DockPanel.Dock="Left" Content="Bearbeiten">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding UpdateCommand}" PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" Margin="5" BorderBrush="Black"
+                        Background="Transparent" DockPanel.Dock="Left" Content="Löschen">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding RemoveCommand}" PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+            </DockPanel>
+            <DockPanel DockPanel.Dock="Bottom">
+                <Button Content="+" Width="30" Height="30" Background="Transparent" BorderBrush="Black"
+                        HorizontalAlignment="Left" Margin="5, 10, 5, 0">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding AddCollectionCommand}" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <DockPanel DockPanel.Dock="Right"
+                           Visibility="{Binding AddCollectionVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Label Content="Name:" Width="60" HorizontalAlignment="Left" VerticalContentAlignment="Bottom"
+                           Margin="5" />
+                    <TextBox Width="240" HorizontalAlignment="Left" VerticalContentAlignment="Bottom" Margin="5"
+                             BorderBrush="Black" BorderThickness="0, 0, 0, 2" Text="{Binding AddCollectionName}" />
+                    <Button Width="120" Background="Transparent" Margin="5" Content="Speichern" BorderBrush="Black"
+                            HorizontalAlignment="Left">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="Click">
+                                <b:InvokeCommandAction Command="{Binding SaveAddCollectionCommand}" />
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                    </Button>
+                </DockPanel>
+            </DockPanel>
+        </DockPanel>
+        <DataGrid DockPanel.Dock="Bottom" ItemsSource="{Binding VocableCollections}"
+                  AutoGenerateColumns="False"
+                  BorderBrush="Transparent"
+                  Margin="10"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  CanUserReorderColumns="False"
+                  CanUserResizeColumns="True"
+                  CanUserResizeRows="False"
+                  CanUserSortColumns="True"
+                  dgx:DataGridFilter.IsAutoFilterEnabled="True"
+                  SelectedIndex="{Binding SelectedIndex}"
+                  SelectedItem="{Binding SelectedItem}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" MinWidth="120" />
+                <DataGridTextColumn Binding="{Binding Vocables.Count}" Header="Anzahl Vokabel" MinWidth="120" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
 </api:BaseWindow>

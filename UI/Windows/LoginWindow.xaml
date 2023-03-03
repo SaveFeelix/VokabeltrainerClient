@@ -11,7 +11,7 @@
                 mc:Ignorable="d"
                 Title="Login"
                 DataContext="{Binding ViewModel, RelativeSource={RelativeSource Self}}"
-                FontSize="18">
+                FontSize="18" Width="500" Height="230" ResizeMode="NoResize">
     <DockPanel>
         <DockPanel DockPanel.Dock="Top" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5">
             <Label Width="120" Content="User:" />

@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using Client.UI.Windows;
 using Microsoft.Extensions.Hosting;
 
@@ -17,6 +18,7 @@ public class WindowRunner : IHostedService
     public Task StartAsync(CancellationToken cancellationToken)
     {
         _loginWindow.ShowDialog();
+        Application.Current.Shutdown();
         return Task.CompletedTask;
     }
 
