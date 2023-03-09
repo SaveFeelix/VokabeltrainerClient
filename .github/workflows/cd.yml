@@ -16,14 +16,21 @@ jobs:
           dotnet-version: '7.0.x'
       - name: Publish Project
         run: dotnet publish -o output/ -c Release
-
-      - name: Echo Output
-        run: dir output
+      - name: Read current Version
+        if: version
+        uses: juliangruber/read-file-action@v1.1.6
+        with:
+          path: ./VERSION.txt
       - name: Archive Release
         uses: thedoctor0/zip-release@0.7.1
         with:
-          name: 'release'
+          filename: 'release${{ steps.version.outputs.content }}.zip'
           type: 'zip'
           path: output/
-      - name: Echo Output (after Zip)
-        run: dir output
+      #- name: Upload Nextcloud
+      #  uses: trympet/nextcloud-artifacts-action@v2.0.0
+      #  with:
+      #    name: 'release.zip'
+      #    nextcloud-url: 'https://cloud.saveapis.com'
+      #    nextcloud-username: ${{ secrets.NEXTCLOUD_USERNAME }}
+      #    nextcloud-password: ${{ secrets.NEXTCLOUD_PASSWORD }}
