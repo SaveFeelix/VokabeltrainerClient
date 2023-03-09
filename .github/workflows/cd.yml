@@ -17,7 +17,7 @@ jobs:
       - name: Publish Project
         run: dotnet publish -o output/ -c Release
       - name: Read current Version
-        if: version
+        id: version
         uses: juliangruber/read-file-action@v1.1.6
         with:
           path: ./VERSION.txt
