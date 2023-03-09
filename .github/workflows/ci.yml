@@ -1,6 +1,7 @@
 name: 'Custom CI'
 
 on:
+  workflow_dispatch:
   pull_request:
   push:
 
@@ -23,7 +24,7 @@ jobs:
         id: cache
         with:
           path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('***.csproj') }}
+          key: ${{ runner.os }}-${{ matrix.configuration }}-nuget-${{ hashFiles('***.csproj') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
       - name: Restore Dependencies
