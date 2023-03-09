@@ -36,3 +36,4 @@ jobs:
         with:
           artifacts: 'release-${{ steps.version.outputs.content }}.zip'
           bodyFile: RELEASE.md
+          tag: ${{ steps.version.outputs.content }}
