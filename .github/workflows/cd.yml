@@ -15,6 +15,8 @@ jobs:
           dotnet-version: '7.0.x'
       - name: Publish Project
         run: dotnet publish -o output/ -c Release
+      - name: Echo Result
+        run: dir output
       - name: Read current Version
         id: version
         uses: juliangruber/read-file-action@v1.1.6
