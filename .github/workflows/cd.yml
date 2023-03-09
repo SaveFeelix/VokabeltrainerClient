@@ -3,11 +3,6 @@ name: 'Custom CD'
 on:
   workflow_dispatch:
 
-permissions:
-  contents: 'read'
-  id-token: 'write'
-  issues: 'write'
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,6 +29,7 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1.12.0
         with:
+          GITHUB_TOKEN: ${{ github.token }}
           artifacts: 'release-${{ steps.version.outputs.content }}.zip'
           bodyFile: RELEASE.md
           tag: ${{ steps.version.outputs.content }}
