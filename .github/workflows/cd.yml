@@ -25,15 +25,14 @@ jobs:
         uses: juliangruber/read-file-action@v1.1.6
         with:
           path: ./VERSION.txt
-      - name: Archive Output
-        uses: montudor/action-zip@v1
+      - name: Archive Release
+        uses: thedoctor0/zip-release@0.7.1
         with:
-          args: zip -qq -r release-${{ steps.version.outputs.content }}.zip output/
-      - name: Upload Nextcloud
-        uses: trympet/nextcloud-artifacts-action@v2.0.0
+          type: 'zip'
+          filename: 'release-${{ steps.version.outputs.content }}.zip'
+          path: output/
+      - name: Create Release
+        uses: ncipollo/release-action@v1.12.0
         with:
-          name: 'release-${{ steps.version.outputs.content }}.zip'
-          path: 'release-${{ steps.version.outputs.content }}.zip'
-          nextcloud-url: 'https://cloud.saveapis.com'
-          nextcloud-username: ${{ secrets.NEXTCLOUD_USERNAME }}
-          nextcloud-password: ${{ secrets.NEXTCLOUD_PASSWORD }}
+          artifacts: 'release-${{ steps.version.outputs.content }}.zip'
+          bodyFile: RELEASE.md
