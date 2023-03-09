@@ -8,9 +8,6 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        configuration: [ 'Debug', 'Release' ]
     runs-on: windows-latest
     steps:
       - name: Checkout Code
@@ -20,4 +17,4 @@ jobs:
         with:
           dotnet-version: '7.0.x'
       - name: Build Project
-        run: dotnet publish -o publish/ -c ${{ matrix.configuration }}
+        run: dotnet publish -o publish/ -c Release
