@@ -1,0 +1,33 @@
+name: 'Custom CI'
+
+on:
+  pull_request:
+  push:
+
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        configuration: [ 'Debug', 'Release' ]
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3.0.3
+        with:
+          dotnet-version: '7.0.x'
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('***.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+      - name: Restore Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: dotnet restore --upgrade
+      - name: Build Project
+        run: dotnet build --no-restore -c {{ matrix.configuration }}
