@@ -28,7 +28,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.configuration }}-nuget-
       - name: Return Cache-Result
-        run: Write-Output ${{ steps.cache.outputs.cache-hit }}
+        run: ${{ steps.cache.outputs.cache-hit }}
       #- name: Restore Dependencies
       #  if: ${{ steps.cache.outputs.cache-hit }} != 'true'
       #  run: dotnet restore
