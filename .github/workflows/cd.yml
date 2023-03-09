@@ -19,8 +19,11 @@ jobs:
 
       - name: Echo Output
         run: dir output
-      #- name: Archive Release
-      #  uses: thedoctor0/zip-release@0.7.1
-      #  with:
-      #    type: 'zip'
-      #    path: output/
+      - name: Archive Release
+        uses: thedoctor0/zip-release@0.7.1
+        with:
+          name: 'release'
+          type: 'zip'
+          path: output/
+      - name: Echo Output (after Zip)
+        run: dir output
