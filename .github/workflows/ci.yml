@@ -8,9 +8,9 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        configuration: [ 'Debug', 'Release' ]
+#    strategy:
+#      matrix:
+#        configuration: [ 'Debug', 'Release' ]
     runs-on: windows-latest
     steps:
       - name: Checkout Code
@@ -27,8 +27,10 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.configuration }}-nuget-${{ hashFiles('***.csproj') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.configuration }}-nuget-
-      - name: Restore Dependencies
-        if: ${{ steps.cache.outputs.cache-hit }} != 'true'
-        run: dotnet restore
-      - name: Build Project
-        run: dotnet build --no-restore -c ${{ matrix.configuration }}
+      - name: Return Cache-Result
+        run: echo ${{ steps.cache.outputs.cache-hit }}
+      #- name: Restore Dependencies
+      #  if: ${{ steps.cache.outputs.cache-hit }} != 'true'
+      #  run: dotnet restore
+      #- name: Build Project
+      #  run: dotnet build --no-restore -c ${{ matrix.configuration }}
