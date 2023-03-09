@@ -26,9 +26,9 @@ jobs:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-${{ matrix.configuration }}-nuget-${{ hashFiles('***.csproj') }}
           restore-keys: |
-            ${{ runner.os }}-nuget-
+            ${{ runner.os }}-${{ matrix.configuration }}-nuget-
       - name: Restore Dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: ${{ steps.cache.outputs.cache-hit }} != 'true'
         run: dotnet restore
       - name: Build Project
         run: dotnet build --no-restore -c ${{ matrix.configuration }}
