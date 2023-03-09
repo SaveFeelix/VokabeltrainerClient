@@ -18,3 +18,11 @@ jobs:
           dotnet-version: '7.0.x'
       - name: Publish Project
         run: dotnet publish -o publish/ -c Release
+
+      - name: Echo Output
+        run: dir output
+      #- name: Archive Release
+      #  uses: thedoctor0/zip-release@0.7.1
+      #  with:
+      #    type: 'zip'
+      #    path: output/
