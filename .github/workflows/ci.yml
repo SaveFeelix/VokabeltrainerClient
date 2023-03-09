@@ -28,6 +28,6 @@ jobs:
             ${{ runner.os }}-nuget-
       - name: Restore Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: dotnet restore --upgrade
+        run: dotnet restore
       - name: Build Project
         run: dotnet build --no-restore -c {{ matrix.configuration }}
