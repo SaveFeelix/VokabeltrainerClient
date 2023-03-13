@@ -25,13 +25,12 @@ jobs:
       - name: Archive Release
         uses: thedoctor0/zip-release@0.7.1
         with:
-          type: 'tar'
-          filename: 'release-${{ steps.version.outputs.content }}.tar.gz'
+          filename: 'release.zip'
           path: output/
       - name: Create Release
         uses: ncipollo/release-action@v1.12.0
         with:
           token: ${{ secrets.PAT }}
-          artifacts: 'release-${{ steps.version.outputs.content }}.tar.gz'
+          artifacts: 'release.zip'
           bodyFile: RELEASE.md
           tag: ${{ steps.version.outputs.content }}
